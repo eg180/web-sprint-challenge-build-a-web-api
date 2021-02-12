@@ -4,6 +4,8 @@
 const router = require("express").Router();
 const Projects = require("./projects-model.js");
 
+const middleware = require("../middleware/middleware.js");
+
 
 router.get("/", (req, res) => {
     Projects.get()
@@ -15,7 +17,7 @@ router.get("/", (req, res) => {
     })
 });
 
-router.get("/:id", (req, res) => {
+router.get("/:id", middleware.checkProjId, (req, res) => {
     const { id } = req.params;
 
     Projects.get(id)
@@ -39,7 +41,7 @@ router.post("/", (req, res) => {
     })
 });
 
-router.put("/:id", (req, res) => {
+router.put("/:id", middleware.checkProjBody, middleware.checkProjId, (req, res) => {
     const { id } = req.params;
     const { changes } = req.body;
 
@@ -52,7 +54,7 @@ router.put("/:id", (req, res) => {
     })
 });
 
-router.delete("/:id", (req, res) => {
+router.delete("/:id", middleware.checkProjId, (req, res) => {
     const { id } = req.params;
 
     Projects.remove(id)
@@ -64,7 +66,13 @@ router.delete("/:id", (req, res) => {
     })
 });
 
-
+router.get('/:id/actions', middleware.checkProjId, (req,res) => {
+    const { projectId } = req.params.id;
+    Projects.getProjectActions(projectId)
+    .then((actions)=>{
+        res.status(200).json(actions);
+    })
+})
 
 
 
