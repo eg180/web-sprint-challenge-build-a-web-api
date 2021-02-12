@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const Actions = require("./actions-model.js");
 
-const validateActionId = require("../middleware/middleware.js")
+// const validateActionId = require("../middleware/middleware.js")
 
 
 router.get("/", (req, res) => {
@@ -10,7 +10,7 @@ router.get("/", (req, res) => {
         res.status(200).json(actions)
     })
     .catch(err => {
-        res.status(401).json([err.error])
+        res.status(500).json({ message: `Server Error: ${err}.` })
     })
 });
 
@@ -39,13 +39,13 @@ router.post("/", (req, res) => {
         res.status(200).json(actions)
     })
     .catch(err => {
-        res.status(401).json(err.error)
+        res.status(400).json(err.error)
     })
 });
 
 router.put("/:id", (req, res) => {
-    const { id } = req.params;
-    const { changes } = req.body;
+    const id = req.params;
+    const changes = req.body;
 
     Actions.update(id, changes)
     .then(actions => {
