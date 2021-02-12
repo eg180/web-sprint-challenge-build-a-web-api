@@ -20,9 +20,9 @@ router.get("/", (req, res) => {
 router.get("/:id", middleware.checkProjId, (req, res) => {
     const { id } = req.params;
 
-    Projects.get(id)
+    Projects.getById(id)
     .then(projects => {
-        res.status(200).json({ id: id, projects})
+        res.status(200).json({projects})
     })
     .catch(err => {
         res.status(404).json(err.error)
@@ -30,7 +30,7 @@ router.get("/:id", middleware.checkProjId, (req, res) => {
 });
 
 router.post("/", (req, res) => {
-    const { action } = req.body;
+    const action = req.body;
 
     Projects.insert(action)
     .then(projects => {
@@ -43,7 +43,7 @@ router.post("/", (req, res) => {
 
 router.put("/:id", middleware.checkProjBody, middleware.checkProjId, (req, res) => {
     const { id } = req.params;
-    const { changes } = req.body;
+    const { changes }  = req.body;
 
     Projects.update(id, changes)
     .then(projects => {
@@ -67,8 +67,8 @@ router.delete("/:id", middleware.checkProjId, (req, res) => {
 });
 
 router.get('/:id/actions', middleware.checkProjId, (req,res) => {
-    const { projectId } = req.params.id;
-    Projects.getProjectActions(projectId)
+    const { id } = req.params;
+    Projects.getProjectActions(id)
     .then((actions)=>{
         res.status(200).json(actions);
     })

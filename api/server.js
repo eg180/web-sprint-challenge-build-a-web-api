@@ -15,7 +15,7 @@ server.use(cors());
 server.use("/api/actions", actionsRouter);
 server.use("/api/projects", projectsRouter);
 
-server.use("/api/*", (_, res) => {
+server.use("/api", (_, res) => {
     res.json({ data: "IT'S ALIVE!" })
 })
 

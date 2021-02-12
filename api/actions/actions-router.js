@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const Actions = require("./actions-model.js");
 
-// const validateActionId = require("../middleware/middleware.js")
+const middleware = require("../middleware/middleware.js");
 
 
 router.get("/", (req, res) => {
@@ -31,12 +31,12 @@ router.get("/:id", (req, res) => {
     })
 });
 
-router.post("/", (req, res) => {
-    const { action } = req.body;
+router.post("/", middleware.checkActionBody, (req, res) => {
+    const actionNew = req.body;
 
-    Actions.insert(action)
-    .then(actions => {
-        res.status(200).json(actions)
+    Actions.insert(actionNew)
+    .then(action => {
+        res.status(201).json(action)
     })
     .catch(err => {
         res.status(400).json(err.error)
@@ -57,7 +57,7 @@ router.put("/:id", (req, res) => {
 });
 
 router.delete("/:id", (req, res) => {
-    const { id } = req.params;
+    const  { id }  = req.params;
 
     Actions.remove(id)
     .then(actions => {
