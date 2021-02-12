@@ -13,9 +13,11 @@ server.use(express.json());
 server.use(cors());
 
 server.use("/api/actions", actionsRouter);
-server.use("api/projects", projectsRouter);
+server.use("/api/projects", projectsRouter);
 
-
+server.use("/api/*", (_, res) => {
+    res.json({ data: "IT'S ALIVE!" })
+})
 
 // Complete your server here!
 // Do NOT `server.listen()` inside this file!

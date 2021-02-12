@@ -4,7 +4,7 @@ const router = require("express").Router();
 const Actions = require("./actions-model.js");
 
 
-router.get("/api/actions", (req, res) => {
+router.get("/", (req, res) => {
     Actions.get()
     .then(actions => {
         res.status(200).json(actions)
@@ -14,7 +14,7 @@ router.get("/api/actions", (req, res) => {
     })
 });
 
-router.get("/api/actions/:id", (req, res) => {
+router.get("/:id", (req, res) => {
     const { id } = req.params;
 
     Actions.get(id)
@@ -26,7 +26,7 @@ router.get("/api/actions/:id", (req, res) => {
     })
 });
 
-router.post("/api/actions", (req, res) => {
+router.post("/", (req, res) => {
     const { action } = req.body;
 
     Actions.insert(action)
@@ -38,7 +38,7 @@ router.post("/api/actions", (req, res) => {
     })
 });
 
-router.put("/api/actions/:id", (req, res) => {
+router.put("/:id", (req, res) => {
     const { id } = req.params;
     const { changes } = req.body;
 
@@ -51,7 +51,7 @@ router.put("/api/actions/:id", (req, res) => {
     })
 });
 
-router.delete("/api/actions/:id", (req, res) => {
+router.delete("/:id", (req, res) => {
     const { id } = req.params;
 
     Actions.remove(id)
