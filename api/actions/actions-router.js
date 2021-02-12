@@ -47,7 +47,7 @@ router.put("/:id", (req, res) => {
         res.status(200).json(actions)
     })
     .catch(err => {
-        res.status(500).json(err.error)
+        res.status(400).json(err.error)
     })
 });
 
