@@ -10,7 +10,7 @@ router.get("/", (req, res) => {
         res.status(200).json(actions)
     })
     .catch(err => {
-        res.status(401).json(err.error)
+        res.status(401).json([err.error])
     })
 });
 
@@ -47,7 +47,7 @@ router.put("/:id", (req, res) => {
         res.status(200).json(actions)
     })
     .catch(err => {
-        res.status(401).json(err.error)
+        res.status(500).json(err.error)
     })
 });
 
@@ -59,7 +59,7 @@ router.delete("/:id", (req, res) => {
         res.status(200).json(actions)
     })
     .catch(err => {
-        res.status(401).json(err.error)
+        res.status(404).json(err.error)
     })
 });
 

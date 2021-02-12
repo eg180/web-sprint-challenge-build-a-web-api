@@ -20,10 +20,10 @@ router.get("/:id", (req, res) => {
 
     Projects.get(id)
     .then(projects => {
-        res.status(200).json(projects)
+        res.status(200).json({ id: id, projects})
     })
     .catch(err => {
-        res.status(401).json(err.error)
+        res.status(404).json(err.error)
     })
 });
 
@@ -35,7 +35,7 @@ router.post("/", (req, res) => {
         res.status(200).json(projects)
     })
     .catch(err => {
-        res.status(401).json(err.error)
+        res.status(400).json(err.error)
     })
 });
 
